@@ -13,7 +13,7 @@ class CouldNotSendNotification extends \Exception
      *
      * @return static
      */
-    public static function microsoftTeamsRespondedWithAnError(ClientException $response)
+    public static function microsoftTeamsRespondedWithAnError(ClientException $exception)
     {
         if (! $exception->hasResponse()) {
             return new static('Microsoft Teams responded with an error but no response body found');
@@ -28,13 +28,13 @@ class CouldNotSendNotification extends \Exception
     /**
      * Thrown when we're unable to communicate with Microsoft Teams.
      *
-     * @param $message
+     * @param \Exception $exception
      *
      * @return static
      */
-    public static function couldNotCommunicateWithMicrosoftTeams($message)
+    public static function couldNotCommunicateWithMicrosoftTeams(\Exception $exception)
     {
-        return new static("The communication with Microsoft Teams failed. `{$message}`");
+        return new static("The communication with Microsoft Teams failed. `{$exception->getMessage()}`");
     }
 
     /**

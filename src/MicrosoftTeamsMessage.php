@@ -37,12 +37,12 @@ class MicrosoftTeamsMessage
     /**
      * Set a title.
      *
-     * @param string $title.
+     * @param string $title - title
      * @param array $params - optional section can be defined (e.g. [$section = '1'].
      *
      * @return $this
      */
-    public function title($title, array $params = []): self
+    public function title(string $title, array $params = []): self
     {
         // if section is defined add it to specified section
         if (isset($params['section'])) {
@@ -59,11 +59,11 @@ class MicrosoftTeamsMessage
     /**
      * Set a summary.
      *
-     * @param string $summary.
+     * @param string $summary - summary
      *
      * @return $this
      */
-    public function summary($summary): self
+    public function summary(string $summary): self
     {
         $this->payload['summary'] = $summary;
 
@@ -73,11 +73,11 @@ class MicrosoftTeamsMessage
     /**
      * Add a type which is used as theme color.
      *
-     * @param string $type.
+     * @param string $type - type of the card
      *
      * @return $this
      */
-    public function type($type): self
+    public function type(string $type): self
     {
         $this->payload['themeColor'] = $this->generateThemeColourCode($type);
 

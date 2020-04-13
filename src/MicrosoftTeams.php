@@ -13,7 +13,7 @@ class MicrosoftTeams
      *
      * @var \GuzzleHttp\Client
      */
-    protected HttpClient $httpClient;
+    protected $httpClient;
 
     /**
      * @param \GuzzleHttp\Client $http
