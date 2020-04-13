@@ -123,10 +123,10 @@ class MicrosoftTeamsMessageTest extends TestCase
             'name' => 'Laravel',
             'targets' => [
                 (object) [
-                  'os'=> 'default',
-                  'uri' => 'https://laravel.com'
-              ]
-            ]
+                    'os'=> 'default',
+                    'uri' => 'https://laravel.com',
+                ],
+            ],
         ];
         $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
     }
@@ -139,7 +139,7 @@ class MicrosoftTeamsMessageTest extends TestCase
         $expectedButton = (object) [
             '@type' => 'HttpPOST',
             'name' => 'Laravel',
-            'body' => 'test body'
+            'body' => 'test body',
         ];
         $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
     }
@@ -151,24 +151,24 @@ class MicrosoftTeamsMessageTest extends TestCase
         $message->button('Laravel', 'https://laravel.com');
         $message->button('Microsoft Teams', 'https://products.office.com/de-at/microsoft-teams/group-chat-software');
         $expectedFirstButton = (object) [
-          '@type' => 'OpenUri',
-          'name' => 'Laravel',
-          'targets' => [
-              (object) [
-                'os'=> 'default',
-                'uri' => 'https://laravel.com'
-            ]
-          ]
+            '@type' => 'OpenUri',
+            'name' => 'Laravel',
+            'targets' => [
+                (object) [
+                    'os'=> 'default',
+                    'uri' => 'https://laravel.com',
+                ],
+            ],
         ];
         $expectedSecondButton = (object) [
-          '@type' => 'OpenUri',
-          'name' => 'Microsoft Teams',
-          'targets' => [
-              (object) [
-                'os'=> 'default',
-                'uri' =>  'https://products.office.com/de-at/microsoft-teams/group-chat-software',
-            ]
-          ]
+            '@type' => 'OpenUri',
+            'name' => 'Microsoft Teams',
+            'targets' => [
+                (object) [
+                    'os'=> 'default',
+                    'uri' =>  'https://products.office.com/de-at/microsoft-teams/group-chat-software',
+                ],
+            ],
         ];
 
         $this->assertEquals($expectedFirstButton, $message->getPayloadValue('potentialAction')[0]);
@@ -202,10 +202,10 @@ class MicrosoftTeamsMessageTest extends TestCase
             'name' => 'Laravel',
             'targets' => [
                 (object) [
-                  'os'=> 'default',
-                  'uri' => 'https://laravel.com'
-              ]
-            ]
+                    'os'=> 'default',
+                    'uri' => 'https://laravel.com',
+                ],
+            ],
         ];
         $this->assertEquals($expectedButton, $message->getPayloadValue('sections')[1]['potentialAction'][0]);
         $this->assertEmpty($message->getPayloadValue('potentialAction'));
@@ -268,7 +268,7 @@ class MicrosoftTeamsMessageTest extends TestCase
         $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')[1]['images'][0]['image']);
         $this->assertEquals('Tooltip', $message->getPayloadValue('sections')[1]['images'][0]['title']);
     }
- 
+
     /** @test */
     public function a_image_can_be_added_without_a_section_which_defaults_to_standard_section(): void
     {
@@ -277,7 +277,7 @@ class MicrosoftTeamsMessageTest extends TestCase
         $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')['standard_section']['images'][0]['image']);
         $this->assertEquals('Tooltip', $message->getPayloadValue('sections')['standard_section']['images'][0]['title']);
     }
- 
+
     /** @test */
     public function multiple_images_can_be_added_to_a_section(): void
     {
@@ -322,7 +322,7 @@ class MicrosoftTeamsMessageTest extends TestCase
     public function it_can_show_the_webhook_url(): void
     {
         $message = new MicrosoftTeamsMessage();
- 
+
         $message->to('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567');
         $this->assertEquals('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567', $message->getWebhookUrl());
     }
@@ -343,14 +343,14 @@ class MicrosoftTeamsMessageTest extends TestCase
             'text' => 'Laravel Notification Channels are awesome!',
             'foo'  => 'bar',
             'potentialAction' => [(object) [
-              '@type' => 'OpenUri',
-              'name' => 'Laravel',
-              'targets' => [
-                  (object) [
-                    'os'=> 'default',
-                    'uri' => 'https://laravel.com'
-                ]
-              ]
+                '@type' => 'OpenUri',
+                'name' => 'Laravel',
+                'targets' => [
+                    (object) [
+                        'os'=> 'default',
+                        'uri' => 'https://laravel.com',
+                    ],
+                ],
             ]],
         ];
 
@@ -371,20 +371,20 @@ class MicrosoftTeamsMessageTest extends TestCase
             'themeColor' => '#1976D2',
             'text' => '',
             'sections' => [
-              '1' => [
-                'title' => 'Laravel is awesome!',
-                'text' => 'Laravel Notification Channels are awesome!',
-              ]
+                '1' => [
+                    'title' => 'Laravel is awesome!',
+                    'text' => 'Laravel Notification Channels are awesome!',
+                ],
             ],
             'potentialAction' => [(object) [
-              '@type' => 'OpenUri',
-              'name' => 'Laravel',
-              'targets' => [
-                  (object) [
-                    'os'=> 'default',
-                    'uri' => 'https://laravel.com'
-                ]
-              ]
+                '@type' => 'OpenUri',
+                'name' => 'Laravel',
+                'targets' => [
+                    (object) [
+                        'os'=> 'default',
+                        'uri' => 'https://laravel.com',
+                    ],
+                ],
             ]],
         ];
 
@@ -406,49 +406,49 @@ class MicrosoftTeamsMessageTest extends TestCase
             ->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo2.png', 'Tooltip2', 'image_section')
             ->button('Laravel', 'https://laravel.com', 'OpenUri', ['section' => 'image_section']);
         $expected = [
-             '@type' => 'MessageCard',
-             '@context' => 'https://schema.org/extensions',
-             'summary' => 'Incoming Notification',
-             'themeColor' => '#1976D2',
-             'text' => '',
-             'sections' => [
-               '1' => [
-                  'title' => 'Laravel is awesome!',
-                  'text' => 'Laravel Notification Channels are awesome!',
-               ],
-               'activity_section' => [
-                  'startGroup' => true,
-                  'activityImage' => '',
-                  'activityTitle' => 'My Activity',
-                  'activitySubtitle' => 'Info to my Activity',
-                  'activityText' => 'This is the content of my activity',
-               ],
-               'fact_section' => [
-                'facts' => [
-                  ['name' => 'Name', 'value' => 'John Doe'],
-                  ['name' => 'Age', 'value' => '28']
-                ]
+            '@type' => 'MessageCard',
+            '@context' => 'https://schema.org/extensions',
+            'summary' => 'Incoming Notification',
+            'themeColor' => '#1976D2',
+            'text' => '',
+            'sections' => [
+                '1' => [
+                    'title' => 'Laravel is awesome!',
+                    'text' => 'Laravel Notification Channels are awesome!',
+                ],
+                'activity_section' => [
+                    'startGroup' => true,
+                    'activityImage' => '',
+                    'activityTitle' => 'My Activity',
+                    'activitySubtitle' => 'Info to my Activity',
+                    'activityText' => 'This is the content of my activity',
+                ],
+                'fact_section' => [
+                    'facts' => [
+                        ['name' => 'Name', 'value' => 'John Doe'],
+                        ['name' => 'Age', 'value' => '28'],
+                    ],
                 ],
                 'image_section' => [
-                  'heroImage' => ['image' => 'https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', 'title' => 'TooltipHero'],
-                  'images' => [
-                    ['image' => 'https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'title' => 'Tooltip'],
-                    ['image' => 'https://messagecardplayground.azurewebsites.net/assets/FlowLogo2.png', 'title' => 'Tooltip2'],
-                  ],
-                  'potentialAction' => [(object) [
-                    '@type' => 'OpenUri',
-                    'name' => 'Laravel',
-                    'targets' => [
-                        (object) [
-                          'os'=> 'default',
-                          'uri' => 'https://laravel.com'
-                      ]
-                    ]
-                  ]],
-                ]
-             ],
-         ];
- 
+                    'heroImage' => ['image' => 'https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', 'title' => 'TooltipHero'],
+                    'images' => [
+                        ['image' => 'https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'title' => 'Tooltip'],
+                        ['image' => 'https://messagecardplayground.azurewebsites.net/assets/FlowLogo2.png', 'title' => 'Tooltip2'],
+                    ],
+                    'potentialAction' => [(object) [
+                        '@type' => 'OpenUri',
+                        'name' => 'Laravel',
+                        'targets' => [
+                            (object) [
+                                'os'=> 'default',
+                                'uri' => 'https://laravel.com',
+                            ],
+                        ],
+                    ]],
+                ],
+            ],
+        ];
+
         $this->assertEquals($expected, $message->toArray());
     }
 }

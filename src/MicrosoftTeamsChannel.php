@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\MicrosoftTeams;
 
-use NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification;
 use Illuminate\Notifications\Notification;
+use NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification;
 
 class MicrosoftTeamsChannel
 {
@@ -44,7 +44,7 @@ class MicrosoftTeamsChannel
         }
 
         $response = $this->microsoftTeams->send($message->getWebhookUrl(), $message->toArray());
-        
+
         return $response;
     }
 }

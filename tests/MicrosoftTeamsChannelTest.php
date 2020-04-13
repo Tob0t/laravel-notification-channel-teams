@@ -2,7 +2,6 @@
 
 namespace NotificationChannels\MicrosoftTeams\Tests;
 
-use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
@@ -42,7 +41,7 @@ class MicrosoftTeamsChannelTest extends TestCase
                     'summary' => 'Hello, MicrosoftTeams!',
                     'themeColor' => '#1976D2',
                     'title' => 'Hello, MicrosoftTeams!',
-                    'text' => 'This is my content.'
+                    'text' => 'This is my content.',
                 ],
             )
             ->once()
@@ -75,7 +74,7 @@ class MicrosoftTeamsChannelTest extends TestCase
                     'summary' => 'Hello, MicrosoftTeams!',
                     'themeColor' => '#1976D2',
                     'title' => 'Hello, MicrosoftTeams!',
-                    'text' => 'This is my content.'
+                    'text' => 'This is my content.',
                 ],
             )
             ->once()
