@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\MicrosoftTeams;
 
+use GuzzleHttp\Client as HttpClient;
 use Illuminate\Support\ServiceProvider;
 
 class MicrosoftTeamsServiceProvider extends ServiceProvider
@@ -13,22 +14,13 @@ class MicrosoftTeamsServiceProvider extends ServiceProvider
     {
         // Bootstrap code here.
 
-        /**
-         * Here's some example code we use for the pusher package.
-
-        $this->app->when(Channel::class)
-            ->needs(Pusher::class)
-            ->give(function () {
-                $pusherConfig = config('broadcasting.connections.pusher');
-
-                return new Pusher(
-                    $pusherConfig['key'],
-                    $pusherConfig['secret'],
-                    $pusherConfig['app_id']
+        $this->app->when(MicrosoftTeamsChannel::class)
+            ->needs(MicrosoftTeams::class)
+            ->give(static function () {
+                return new MicrosoftTeams(
+                    new HttpClient()
                 );
             });
-         */
-
     }
 
     /**

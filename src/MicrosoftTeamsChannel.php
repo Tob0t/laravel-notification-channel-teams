@@ -7,25 +7,44 @@ use Illuminate\Notifications\Notification;
 
 class MicrosoftTeamsChannel
 {
-    public function __construct()
+    /**
+     * @var MicrosoftTeams
+     */
+    protected $microsoftTeams;
+
+    /**
+     * Channel constructor.
+     *
+     * @param MicrosoftTeams $microsoftTeams
+     */
+    public function __construct(MicrosoftTeams $microsoftTeams)
     {
-        // Initialisation code here
+        $this->microsoftTeams = $microsoftTeams;
     }
 
     /**
      * Send the given notification.
      *
      * @param mixed $notifiable
-     * @param \Illuminate\Notifications\Notification $notification
+     * @param Notification $notification
      *
-     * @throws \NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification
+     * @throws CouldNotSendNotification
      */
     public function send($notifiable, Notification $notification)
     {
-        //$response = [a call to the api of your notification send]
+        $message = $notification->toMicrosoftTeams($notifiable);
 
-//        if ($response->error) { // replace this by the code need to check for errors
-//            throw CouldNotSendNotification::serviceRespondedWithAnError($response);
-//        }
+        // if the recipient is not defined check if from the notifiable object
+        if ($message->toNotGiven()) {
+            if (! $to = $notifiable->routeNotificationFor('microsoftTeams')) {
+                throw CouldNotSendNotification::microsoftTeamsWebhookUrlMissing();
+            }
+
+            $message->to($to);
+        }
+
+        $response = $this->microsoftTeams->send($message->getWebhookUrl(), $message->toArray());
+        
+        return $response;
     }
 }
