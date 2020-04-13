@@ -47,7 +47,7 @@ class MicrosoftTeamsMessage
     public function title($title, array $params = []): self
     {
         // if section is defined add it to specified section
-        if(isset($params['section'])) {
+        if (isset($params['section'])) {
             $sectionId = $params['section'];
             $this->payload['sections'][$sectionId]['title'] = $title;
         } else {
@@ -97,7 +97,7 @@ class MicrosoftTeamsMessage
     public function content(string $content, array $params = []): self
     {
         // if section is defined add it to specified section
-        if(isset($params['section'])) {
+        if (isset($params['section'])) {
             $sectionId = $params['section'];
             $this->payload['sections'][$sectionId]['text'] = $content;
         } else {
@@ -107,21 +107,21 @@ class MicrosoftTeamsMessage
         return $this;
     }
 
-     /**
-     * Add a button.
-     *
-     * @param string $text - label of the button
-     * @param string $url - url to forward to
-     * @param string $type - defaults to 'OpenUri' should be one of the following types: 
-     *  - OpenUri: Opens a URI in a separate browser or app; optionally targets different URIs based on operating systems
-     *  - HttpPOST: Sends a POST request to a URL
-     *  - ActionCard: Presents one or more input types and associated actions
-     *  - InvokeAddInCommand: Opens an Outlook add-in task pane.
-     * * @param array $params - optional params (neexed for more complex types other than 'OpenUri' and for section)
-     * For more information check out: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
-     *
-     * @return $this
-     */
+    /**
+    * Add a button.
+    *
+    * @param string $text - label of the button
+    * @param string $url - url to forward to
+    * @param string $type - defaults to 'OpenUri' should be one of the following types:
+    *  - OpenUri: Opens a URI in a separate browser or app; optionally targets different URIs based on operating systems
+    *  - HttpPOST: Sends a POST request to a URL
+    *  - ActionCard: Presents one or more input types and associated actions
+    *  - InvokeAddInCommand: Opens an Outlook add-in task pane.
+    * * @param array $params - optional params (neexed for more complex types other than 'OpenUri' and for section)
+    * For more information check out: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
+    *
+    * @return $this
+    */
     public function button($text, $url, $type = 'OpenUri', array $params = []): self
     {
 
@@ -132,7 +132,7 @@ class MicrosoftTeamsMessage
             ];
         
         // fill targets array for type 'OpenUri'
-        if($type === 'OpenUri'){
+        if ($type === 'OpenUri') {
             $newButton['targets'] = [
                 (object) [
                     'os'=> 'default',
@@ -142,12 +142,12 @@ class MicrosoftTeamsMessage
         }
 
         // fill additional params (needed for other types than 'OpenUri')
-        if(!empty($params)){
+        if (!empty($params)) {
             $newButton = array_merge($newButton, $params);
         }
 
         // if section is defined add it to specified section
-        if(isset($params['section'])) {
+        if (isset($params['section'])) {
             // remove unsued property from newButton array
             unset($newButton['section']);
             $sectionId = $params['section'];
@@ -262,8 +262,8 @@ class MicrosoftTeamsMessage
      */
     public function options(array $options, $sectionId = null): self
     {
-        if($sectionId){
-            $this->payload['sections'][$sectionId] = array_merge($this->payload['sections'][$sectionId], $options);    
+        if ($sectionId) {
+            $this->payload['sections'][$sectionId] = array_merge($this->payload['sections'][$sectionId], $options);
         }
         $this->payload = array_merge($this->payload, $options);
 
@@ -321,7 +321,7 @@ class MicrosoftTeamsMessage
      * if named color not found the type should be a hex color code
      *
      * @param string $type
-     * 
+     *
      * @return string
      */
     private function generateThemeColourCode($type = 'primary'): string
@@ -337,7 +337,6 @@ class MicrosoftTeamsMessage
         ];
 
         return $namedColors[$type] ?? $type;
-        
     }
 
     /**
@@ -349,5 +348,4 @@ class MicrosoftTeamsMessage
     {
         return $this->payload;
     }
-
 }

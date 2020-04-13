@@ -88,7 +88,7 @@ class MicrosoftTeamsMessageTest extends TestCase
         $this->assertEquals('Laravel is awesome!', $message->getPayloadValue('text'));
     }
 
-     /** @test */
+    /** @test */
     public function setting_the_content_of_a_section_is_working(): void
     {
         $message = new MicrosoftTeamsMessage();
@@ -144,9 +144,9 @@ class MicrosoftTeamsMessageTest extends TestCase
         $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
     }
 
-     /** @test */
-     public function multiple_buttons_can_be_added_to_the_messsage(): void
-     {
+    /** @test */
+    public function multiple_buttons_can_be_added_to_the_messsage(): void
+    {
         $message = new MicrosoftTeamsMessage();
         $message->button('Laravel', 'https://laravel.com');
         $message->button('Microsoft Teams', 'https://products.office.com/de-at/microsoft-teams/group-chat-software');
@@ -173,7 +173,7 @@ class MicrosoftTeamsMessageTest extends TestCase
 
         $this->assertEquals($expectedFirstButton, $message->getPayloadValue('potentialAction')[0]);
         $this->assertEquals($expectedSecondButton, $message->getPayloadValue('potentialAction')[1]);
-     }
+    }
 
     /** @test */
     public function additional_options_can_be_set_for_the_message(): void
@@ -260,35 +260,35 @@ class MicrosoftTeamsMessageTest extends TestCase
         $this->assertEquals('28', $message->getPayloadValue('sections')[1]['facts'][1]['value']);
     }
 
-     /** @test */
-     public function a_image_can_be_added_to_a_section(): void
-     {
-         $message = new MicrosoftTeamsMessage();
-         $message->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip', 1);
-         $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')[1]['images'][0]['image']);
-         $this->assertEquals('Tooltip', $message->getPayloadValue('sections')[1]['images'][0]['title']);
-     }
+    /** @test */
+    public function a_image_can_be_added_to_a_section(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+        $message->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip', 1);
+        $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')[1]['images'][0]['image']);
+        $this->assertEquals('Tooltip', $message->getPayloadValue('sections')[1]['images'][0]['title']);
+    }
  
-     /** @test */
-     public function a_image_can_be_added_without_a_section_which_defaults_to_standard_section(): void
-     {
-         $message = new MicrosoftTeamsMessage();
-         $message->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip');
-         $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')['standard_section']['images'][0]['image']);
-         $this->assertEquals('Tooltip', $message->getPayloadValue('sections')['standard_section']['images'][0]['title']);
-     }
+    /** @test */
+    public function a_image_can_be_added_without_a_section_which_defaults_to_standard_section(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+        $message->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip');
+        $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')['standard_section']['images'][0]['image']);
+        $this->assertEquals('Tooltip', $message->getPayloadValue('sections')['standard_section']['images'][0]['title']);
+    }
  
-     /** @test */
-     public function multiple_images_can_be_added_to_a_section(): void
-     {
-         $message = new MicrosoftTeamsMessage();
-         $message->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip1', 1);
-         $message->image('https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', 'Tooltip2', 1);
-         $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')[1]['images'][0]['image']);
-         $this->assertEquals('Tooltip1', $message->getPayloadValue('sections')[1]['images'][0]['title']);
-         $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', $message->getPayloadValue('sections')[1]['images'][1]['image']);
-         $this->assertEquals('Tooltip2', $message->getPayloadValue('sections')[1]['images'][1]['title']);
-     }
+    /** @test */
+    public function multiple_images_can_be_added_to_a_section(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+        $message->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip1', 1);
+        $message->image('https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', 'Tooltip2', 1);
+        $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', $message->getPayloadValue('sections')[1]['images'][0]['image']);
+        $this->assertEquals('Tooltip1', $message->getPayloadValue('sections')[1]['images'][0]['title']);
+        $this->assertEquals('https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', $message->getPayloadValue('sections')[1]['images'][1]['image']);
+        $this->assertEquals('Tooltip2', $message->getPayloadValue('sections')[1]['images'][1]['title']);
+    }
 
     /** @test */
     public function a_hero_image_can_be_added_to_a_section(): void
@@ -318,14 +318,14 @@ class MicrosoftTeamsMessageTest extends TestCase
         $this->assertFalse($message->toNotGiven());
     }
 
-     /** @test */
-     public function it_can_show_the_webhook_url(): void
-     {
-         $message = new MicrosoftTeamsMessage();
+    /** @test */
+    public function it_can_show_the_webhook_url(): void
+    {
+        $message = new MicrosoftTeamsMessage();
  
-         $message->to('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567');
-         $this->assertEquals('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567', $message->getWebhookUrl());
-     }
+        $message->to('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567');
+        $this->assertEquals('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567', $message->getWebhookUrl());
+    }
 
     /** @test */
     public function it_can_return_the_payload_as_an_array(): void
@@ -391,21 +391,21 @@ class MicrosoftTeamsMessageTest extends TestCase
         $this->assertEquals($expected, $message->toArray());
     }
 
-     /** @test */
-     public function it_can_return_the_payload_as_an_array_with_activities_facts_and_images_in_multiple_sections(): void
-     {
-         $message = new MicrosoftTeamsMessage();
-         $message->title('Laravel is awesome!', ['section' => 1])
+    /** @test */
+    public function it_can_return_the_payload_as_an_array_with_activities_facts_and_images_in_multiple_sections(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+        $message->title('Laravel is awesome!', ['section' => 1])
             ->content('Laravel Notification Channels are awesome!', ['section' => 1])
             ->addStartGroupToSection('activity_section')
-            ->activity('','My Activity', 'Info to my Activity', 'This is the content of my activity', 'activity_section')
+            ->activity('', 'My Activity', 'Info to my Activity', 'This is the content of my activity', 'activity_section')
             ->fact('Name', 'John Doe', 'fact_section')
             ->fact('Age', '28', 'fact_section')
             ->heroImage('https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', 'TooltipHero', 'image_section')
             ->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip', 'image_section')
             ->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo2.png', 'Tooltip2', 'image_section')
             ->button('Laravel', 'https://laravel.com', 'OpenUri', ['section' => 'image_section']);
-         $expected = [
+        $expected = [
              '@type' => 'MessageCard',
              '@context' => 'https://schema.org/extensions',
              'summary' => 'Incoming Notification',
@@ -449,6 +449,6 @@ class MicrosoftTeamsMessageTest extends TestCase
              ],
          ];
  
-         $this->assertEquals($expected, $message->toArray());
-     }
+        $this->assertEquals($expected, $message->toArray());
+    }
 }

@@ -34,13 +34,14 @@ class MicrosoftTeamsChannelTest extends TestCase
     public function it_can_send_a_notification()
     {
         $this->microsoftTeams->shouldReceive('send')
-            ->with('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567',
+            ->with(
+                'https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567',
                 [
                     '@type' => 'MessageCard',
-                    '@context' => 'https://schema.org/extensions', 
-                    'summary' => 'Hello, MicrosoftTeams!', 
+                    '@context' => 'https://schema.org/extensions',
+                    'summary' => 'Hello, MicrosoftTeams!',
                     'themeColor' => '#1976D2',
-                    'title' => 'Hello, MicrosoftTeams!', 
+                    'title' => 'Hello, MicrosoftTeams!',
                     'text' => 'This is my content.'
                 ],
             )
@@ -56,7 +57,6 @@ class MicrosoftTeamsChannelTest extends TestCase
     /** @test */
     public function it_does_not_send_a_notification_if_the_notifiable_does_not_provide_a_microsoft_teams_channel()
     {
-
         $this->expectException(CouldNotSendNotification::class);
 
         $channel = new MicrosoftTeamsChannel($this->microsoftTeams);
@@ -67,13 +67,14 @@ class MicrosoftTeamsChannelTest extends TestCase
     public function it_does_send_a_notification_if_the_notifiable_does_not_provide_a_microsoft_teams_channel_but_the_to_param_is_set()
     {
         $this->microsoftTeams->shouldReceive('send')
-            ->with('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567',
+            ->with(
+                'https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567',
                 [
                     '@type' => 'MessageCard',
-                    '@context' => 'https://schema.org/extensions', 
-                    'summary' => 'Hello, MicrosoftTeams!', 
+                    '@context' => 'https://schema.org/extensions',
+                    'summary' => 'Hello, MicrosoftTeams!',
                     'themeColor' => '#1976D2',
-                    'title' => 'Hello, MicrosoftTeams!', 
+                    'title' => 'Hello, MicrosoftTeams!',
                     'text' => 'This is my content.'
                 ],
             )

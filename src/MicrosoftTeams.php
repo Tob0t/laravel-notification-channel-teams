@@ -35,7 +35,7 @@ class MicrosoftTeams
      */
     public function send(string $url, array $data)
     {
-        if(!$url){
+        if (!$url) {
             throw CouldNotSendNotification::microsoftTeamsWebhookUrlMissing();
         }
         try {
