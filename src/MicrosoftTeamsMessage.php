@@ -2,8 +2,6 @@
 
 namespace NotificationChannels\MicrosoftTeams;
 
-use Illuminate\Support\Arr;
-
 class MicrosoftTeamsMessage
 {
     /** @var array Params payload. */
@@ -108,41 +106,41 @@ class MicrosoftTeamsMessage
     }
 
     /**
-    * Add a button.
-    *
-    * @param string $text - label of the button
-    * @param string $url - url to forward to
-    * @param string $type - defaults to 'OpenUri' should be one of the following types:
-    *  - OpenUri: Opens a URI in a separate browser or app; optionally targets different URIs based on operating systems
-    *  - HttpPOST: Sends a POST request to a URL
-    *  - ActionCard: Presents one or more input types and associated actions
-    *  - InvokeAddInCommand: Opens an Outlook add-in task pane.
-    * * @param array $params - optional params (neexed for more complex types other than 'OpenUri' and for section)
-    * For more information check out: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
-    *
-    * @return $this
-    */
+     * Add a button.
+     *
+     * @param string $text - label of the button
+     * @param string $url - url to forward to
+     * @param string $type - defaults to 'OpenUri' should be one of the following types:
+     *  - OpenUri: Opens a URI in a separate browser or app; optionally targets different URIs based on operating systems
+     *  - HttpPOST: Sends a POST request to a URL
+     *  - ActionCard: Presents one or more input types and associated actions
+     *  - InvokeAddInCommand: Opens an Outlook add-in task pane.
+     * * @param array $params - optional params (neexed for more complex types other than 'OpenUri' and for section)
+     * For more information check out: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
+     *
+     * @return $this
+     */
     public function button($text, $url, $type = 'OpenUri', array $params = []): self
     {
 
         // fill required values for all types
         $newButton = [
-                '@type' => $type,
-                'name' => $text,
-            ];
-        
+            '@type' => $type,
+            'name' => $text,
+        ];
+
         // fill targets array for type 'OpenUri'
         if ($type === 'OpenUri') {
             $newButton['targets'] = [
                 (object) [
                     'os'=> 'default',
-                    'uri' => $url
-                ]
+                    'uri' => $url,
+                ],
             ];
         }
 
         // fill additional params (needed for other types than 'OpenUri')
-        if (!empty($params)) {
+        if (! empty($params)) {
             $newButton = array_merge($newButton, $params);
         }
 
@@ -162,7 +160,7 @@ class MicrosoftTeamsMessage
     /**
      * Add a startGroup property which marks the start of a logical group of information (only for sections).
      *
-     * @param string|integer $sectionId - in which section to put the property, defaults to standard_section
+     * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
      * @return $this
      */
@@ -180,7 +178,7 @@ class MicrosoftTeamsMessage
      * @param string $activityTitle
      * @param string $activitySubtitle
      * @param string $activityText
-     * @param string|integer $sectionId - in which section to put the property, defaults to standard_section
+     * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
      * @return $this
      */
@@ -194,13 +192,12 @@ class MicrosoftTeamsMessage
         return $this;
     }
 
-
     /**
      * Add a fact to a section (Supports Markdown).
      *
      * @param string $name
      * @param string $value
-     * @param string|integer $sectionId - in which section to put the property, defaults to standard_section
+     * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
      * @return $this
      */
@@ -217,7 +214,7 @@ class MicrosoftTeamsMessage
      *
      * @param string $imageUri - The URL to the image.
      * @param string $title - A short description of the image. Typically, title is displayed in a tooltip as the user hovers their mouse over the image
-     * @param string|integer $sectionId - in which section to put the property, defaults to standard_section
+     * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
      * @return $this
      */
@@ -225,7 +222,7 @@ class MicrosoftTeamsMessage
     {
         $newImage = [
             'image' => $imageUri,
-            'title' => $title
+            'title' => $title,
         ];
         $this->payload['sections'][$sectionId]['images'][] = $newImage;
 
@@ -237,7 +234,7 @@ class MicrosoftTeamsMessage
      *
      * @param string $imageUri - The URL to the image.
      * @param string $title - A short description of the image. Typically, title is displayed in a tooltip as the user hovers their mouse over the image
-     * @param string|integer $sectionId - in which section to put the property, defaults to standard_section
+     * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
      * @return $this
      */
@@ -245,7 +242,7 @@ class MicrosoftTeamsMessage
     {
         $newImage = [
             'image' => $imageUri,
-            'title' => $title
+            'title' => $title,
         ];
         $this->payload['sections'][$sectionId]['heroImage'] = $newImage;
 
@@ -256,7 +253,7 @@ class MicrosoftTeamsMessage
      * Additional options to pass to message payload object.
      *
      * @param array $options
-     * @param string|integer $sectionId - optional in which section to put the property
+     * @param string|int $sectionId - optional in which section to put the property
      *
      * @return $this
      */
@@ -301,7 +298,7 @@ class MicrosoftTeamsMessage
      */
     public function toNotGiven(): bool
     {
-        return !$this->webhookUrl;
+        return ! $this->webhookUrl;
     }
 
     /**
@@ -318,7 +315,7 @@ class MicrosoftTeamsMessage
 
     /**
      * Generate a colour code use given by name of type, fallback to primary
-     * if named color not found the type should be a hex color code
+     * if named color not found the type should be a hex color code.
      *
      * @param string $type
      *

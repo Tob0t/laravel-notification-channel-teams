@@ -38,10 +38,10 @@ class CouldNotSendNotification extends \Exception
     }
 
     /**
-    * Thrown when there is no webhook url provided.
-    *
-    * @return static
-    */
+     * Thrown when there is no webhook url provided.
+     *
+     * @return static
+     */
     public static function microsoftTeamsWebhookUrlMissing()
     {
         return new static('Microsoft Teams webhook url is missing. Please add it as param over the MicrosoftTeamsMessage::to($url) method or return it in the notifiable model by providing the method Model::routeNotificationForMicrosoftTeams().');
