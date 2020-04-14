@@ -9,15 +9,15 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/teams/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/teams/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/teams.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/teams)
 
-This package makes it easy to send notifications using [MicrosoftTeams](https://products.office.com/en-US/microsoft-teams/group-chat-software) with Laravel 5.5+, 6.x and 7.x
+This package makes it easy to send notifications using [Microsoft Teams](https://products.office.com/en-US/microsoft-teams/group-chat-software) with Laravel 5.5+, 6.x and 7.x
 
 ```php
 return MicrosoftTeamsMessage::create()
-		->to(config('services.teams.sales_url'))
-		->type('success')
-		->title('Subscription Created')
-		->content('Yey, you got a new subscription. Maybe you want to contact him if he needs any support?')
-		->button('Check User', 'https://foo.bar/users/123');
+    ->to(config('services.teams.sales_url'))
+    ->type('success')
+    ->title('Subscription Created')
+    ->content('Yey, you got a **new subscription**. Maybe you want to contact him if he needs any support?')
+    ->button('Check User', 'https://foo.bar/users/123');
 ```
 ## Contents
 
@@ -44,7 +44,7 @@ composer require tob0t/laravel-notification-channel-teams
 
 ### Setting up the Connector
 
-Please check out [this](https://docs.microsoft.com/en-gb/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel) for setting up and adding a webhook connector to your Team's channel. Basic Markdown is supported, please also check out the [message card reference article](https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference#httppost-action) which goes in more detail.
+Please check out [this](https://docs.microsoft.com/en-gb/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook#add-an-incoming-webhook-to-a-teams-channel) for setting up and adding a webhook connector to your Team's channel. Basic Markdown is supported, please also check out the [message card reference article](https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference#httppost-action) which goes in more detail about the do's and don'ts.
 
 ### Setting up the MicrosoftTeams service
 
@@ -67,8 +67,8 @@ You can also add multiple webhooks if you have multiple teams or channels, it's 
 // config/services.php
 ...
 'teams' => [
-		'sales_url' => env('TEAMS_SALES_WEBHOOK_URL'),
-		'dev_url' => env('TEAMS_DEV_WEBHOOK_URL'),
+    'sales_url' => env('TEAMS_SALES_WEBHOOK_URL'),
+    'dev_url' => env('TEAMS_DEV_WEBHOOK_URL'),
 ],
 ...
 ```
@@ -85,7 +85,7 @@ class SubscriptionCreated extends Notification
 {
     public function via($notifiable)
     {
-        return [MicrosoftTeamsChannel::class]; // or 'all_my_sms'
+        return [MicrosoftTeamsChannel::class];
     }
 
     public function toMicrosoftTeams($notifiable)
@@ -93,17 +93,14 @@ class SubscriptionCreated extends Notification
         return MicrosoftTeamsMessage::create()
             ->to(config('services.teams.sales_url'))
             ->type('success')
-            ->title('Subscription Created - '.$notifiable->email)
-            ->content('Yey, the user **'.$notifiable->firstname.' '.$notifiable->lastname.'** just subscribed to the product **'.$this->product->name.'**. 
-            Maybe you want to contact him if he needs any support?')
-            ->button('Check User', $this->usersUrl.'/'.$notifiable->id);
+            ->title('Subscription Created')
+            ->content('Yey, you got a **new subscription**. Maybe you want to contact him if he needs any support?')
+            ->button('Check User', 'https://foo.bar/users/123');
     }
 }
 ```
 
-Instead of adding the `to($url)` method for the recipient you can also add the `routeNotificationForMicrosoftTeams` method inside your Notifiable model.
-
-This method needs to return the webhook url.
+Instead of adding the `to($url)` method for the recipient you can also add the `routeNotificationForMicrosoftTeams` method inside your Notifiable model. This method needs to return the webhook url.
 
 ```php
 public function routeNotificationForMicrosoftTeams(Notification $notification)
@@ -116,11 +113,11 @@ public function routeNotificationForMicrosoftTeams(Notification $notification)
 ### Available Message methods
 
 - `to(string $webhookUrl)`: Recipient's webhook url.
-- `title(string $title)`: Accepts a string value for the title of the message.
-- `summary(string $summary)`: Accepts a string value for the summary of the message.
-- `type(string $type)`: Accepts a string value for the type which is used as theme color (primary|secondary|accent|error|info|success|warning) or any valid hex code.
-- `content(string $content)`: Accepts a string value for the content of the message (Markdown supported).
-- `button(string $text, string $url = '', $type = 'OpenUri', array $params = [])`: Accepts a string value for the text and url of a button. For more Infos about different types check out [this link](https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference#actions).
+- `title(string $title)`: Title of the message.
+- `summary(string $summary)`: Summary of the message.
+- `type(string $type)`: Type which is used as theme color (any valid hex code or one of: primary|secondary|accent|error|info|success|warning).
+- `content(string $content)`: Content of the message (Markdown supported).
+- `button(string $text, string $url = '', $type = 'OpenUri', array $params = [])`: Text and url of a button. For more Infos about different types check out [this link](https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference#actions).
 - `options(array $options, $sectionId = null)`: Add additional options to pass to message payload object.
 
 #### Sections
@@ -131,10 +128,10 @@ It is possible to define one or many sections inside a message card. The followi
 - `image(string $imageUri, string $title = '', $sectionId = 'standard_section')`: Add an image to a section.
 - `heroImage(string $imageUri, string $title = '', $sectionId = 'standard_section')`: Add a hero image to a section.
 
-Additionally the title, content and button can be also added to a section through the optional params value:
-- `title(string $title, array $params = ['section' => 'my-section'])`: Accepts a string value for the title of the message and add it to `my-section`.
-- `content(string $content, array $params = ['section' => 'my-section'])`: Accepts a string value for the content of the message and add it to `my-section` (Markdown supported).
-- `button(string $text, string $url = '', $type = 'OpenUri', array $params = ['section' => 'my-section'])`: Accepts a string value for the text and url of a button and add it to `my-section`
+Additionally the title, content and button can be also added to a section through the optional `params` value:
+- `title(string $title, array $params = ['section' => 'my-section'])`: Title of the message and add it to `my-section`.
+- `content(string $content, array $params = ['section' => 'my-section'])`: Content of the message and add it to `my-section` (Markdown supported).
+- `button(string $text, string $url = '', $type = 'OpenUri', array $params = ['section' => 'my-section'])`: Text and url of a button and add it to `my-section`.
 
 ## Changelog
 
