@@ -4,7 +4,9 @@ namespace NotificationChannels\MicrosoftTeams;
 
 use Exception;
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\ClientException;
 use NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification;
+use Psr\Http\Message\ResponseInterface;
 
 class MicrosoftTeams
 {
@@ -29,9 +31,11 @@ class MicrosoftTeams
      * @param string $url
      * @param array $data
      *
-     * @return array
+     *  @throws CouldNotSendNotification
+     *
+     *  @return ResponseInterface|null
      */
-    public function send(string $url, array $data)
+    public function send(string $url, array $data): ?ResponseInterface
     {
         if (! $url) {
             throw CouldNotSendNotification::microsoftTeamsWebhookUrlMissing();
