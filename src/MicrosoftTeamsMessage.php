@@ -218,7 +218,7 @@ class MicrosoftTeamsMessage
      *
      * @return $this
      */
-    public function image(string $imageUri, string $title, $sectionId = 'standard_section'): self
+    public function image(string $imageUri, string $title = '', $sectionId = 'standard_section'): self
     {
         $newImage = [
             'image' => $imageUri,
@@ -238,7 +238,7 @@ class MicrosoftTeamsMessage
      *
      * @return $this
      */
-    public function heroImage(string $imageUri, string $title, $sectionId = 'standard_section'): self
+    public function heroImage(string $imageUri, string $title = '', $sectionId = 'standard_section'): self
     {
         $newImage = [
             'image' => $imageUri,
