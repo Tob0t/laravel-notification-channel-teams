@@ -120,7 +120,7 @@ class MicrosoftTeamsMessage
      *
      * @return $this
      */
-    public function button($text, $url, $type = 'OpenUri', array $params = []): self
+    public function button(string $text, string $url = '', $type = 'OpenUri', array $params = []): self
     {
 
         // fill required values for all types

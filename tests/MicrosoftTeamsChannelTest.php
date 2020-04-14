@@ -12,6 +12,9 @@ use NotificationChannels\MicrosoftTeams\MicrosoftTeamsChannel;
 use NotificationChannels\MicrosoftTeams\MicrosoftTeamsMessage;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class MicrosoftTeamsChannelTest.
+ */
 class MicrosoftTeamsChannelTest extends TestCase
 {
     /** @var Mockery\Mock */
