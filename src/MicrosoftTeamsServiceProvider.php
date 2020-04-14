@@ -3,6 +3,8 @@
 namespace NotificationChannels\MicrosoftTeams;
 
 use GuzzleHttp\Client as HttpClient;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\ServiceProvider;
 
 class MicrosoftTeamsServiceProvider extends ServiceProvider
@@ -28,5 +30,8 @@ class MicrosoftTeamsServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Notification::extend('teams', static function (Container $app) {
+            return $app->make(MicrosoftTeamsChannel::class);
+        });
     }
 }
