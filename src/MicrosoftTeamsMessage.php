@@ -2,6 +2,8 @@
 
 namespace NotificationChannels\MicrosoftTeams;
 
+use NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification;
+
 class MicrosoftTeamsMessage
 {
     /** @var array Params payload. */
@@ -272,10 +274,15 @@ class MicrosoftTeamsMessage
      *
      * @param $webhookUrl - url of webhook
      *
-     * @return $this
+     * @throws CouldNotSendNotification
+     *
+     * @return MicrosoftTeamsMessage $this
      */
-    public function to(string $webhookUrl): self
+    public function to(?string $webhookUrl): self
     {
+        if (! $webhookUrl) {
+            throw CouldNotSendNotification::microsoftTeamsWebhookUrlMissing();
+        }
         $this->webhookUrl = $webhookUrl;
 
         return $this;

@@ -28,17 +28,15 @@ class MicrosoftTeamsChannel
      * @param mixed $notifiable
      * @param Notification $notification
      *
-     * @throws CouldNotSendNotification
+     * @return ResponseInterface|null
      */
     public function send($notifiable, Notification $notification)
     {
         $message = $notification->toMicrosoftTeams($notifiable);
 
-        // if the recipient is not defined check if from the notifiable object
+        // if the recipient is not defined get it from the notifiable object
         if ($message->toNotGiven()) {
-            if (! $to = $notifiable->routeNotificationFor('microsoftTeams')) {
-                throw CouldNotSendNotification::microsoftTeamsWebhookUrlMissing();
-            }
+            $to = $notifiable->routeNotificationFor('microsoftTeams');
 
             $message->to($to);
         }
