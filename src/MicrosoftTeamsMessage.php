@@ -2,6 +2,8 @@
 
 namespace NotificationChannels\MicrosoftTeams;
 
+use NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification;
+
 class MicrosoftTeamsMessage
 {
     /** @var array Params payload. */
@@ -40,7 +42,7 @@ class MicrosoftTeamsMessage
      * @param string $title - title
      * @param array $params - optional section can be defined (e.g. [$section = '1'].
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function title(string $title, array $params = []): self
     {
@@ -61,7 +63,7 @@ class MicrosoftTeamsMessage
      *
      * @param string $summary - summary
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function summary(string $summary): self
     {
@@ -75,7 +77,7 @@ class MicrosoftTeamsMessage
      *
      * @param string $type - type of the card
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function type(string $type): self
     {
@@ -90,7 +92,7 @@ class MicrosoftTeamsMessage
      * @param string $content
      * @param array $params - optional section can be defined (e.g. [$section = '1'].
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function content(string $content, array $params = []): self
     {
@@ -118,7 +120,7 @@ class MicrosoftTeamsMessage
      * * @param array $params - optional params (neexed for more complex types other than 'OpenUri' and for section)
      * For more information check out: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function button(string $text, string $url = '', $type = 'OpenUri', array $params = []): self
     {
@@ -162,7 +164,7 @@ class MicrosoftTeamsMessage
      *
      * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function addStartGroupToSection($sectionId = 'standard_section'): self
     {
@@ -180,7 +182,7 @@ class MicrosoftTeamsMessage
      * @param string $activityText
      * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function activity(string $activityImage = '', string $activityTitle = '', string $activitySubtitle = '', string $activityText = '', $sectionId = 'standard_section'): self
     {
@@ -199,7 +201,7 @@ class MicrosoftTeamsMessage
      * @param string $value
      * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function fact(string $name, string $value, $sectionId = 'standard_section'): self
     {
@@ -216,7 +218,7 @@ class MicrosoftTeamsMessage
      * @param string $title - A short description of the image. Typically, title is displayed in a tooltip as the user hovers their mouse over the image
      * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function image(string $imageUri, string $title = '', $sectionId = 'standard_section'): self
     {
@@ -236,7 +238,7 @@ class MicrosoftTeamsMessage
      * @param string $title - A short description of the image. Typically, title is displayed in a tooltip as the user hovers their mouse over the image
      * @param string|int $sectionId - in which section to put the property, defaults to standard_section
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function heroImage(string $imageUri, string $title = '', $sectionId = 'standard_section'): self
     {
@@ -255,7 +257,7 @@ class MicrosoftTeamsMessage
      * @param array $options
      * @param string|int $sectionId - optional in which section to put the property
      *
-     * @return $this
+     * @return MicrosoftTeamsMessage $this
      */
     public function options(array $options, $sectionId = null): self
     {
@@ -272,10 +274,15 @@ class MicrosoftTeamsMessage
      *
      * @param $webhookUrl - url of webhook
      *
-     * @return $this
+     * @throws CouldNotSendNotification
+     *
+     * @return MicrosoftTeamsMessage $this
      */
-    public function to(string $webhookUrl): self
+    public function to(?string $webhookUrl): self
     {
+        if (! $webhookUrl) {
+            throw CouldNotSendNotification::microsoftTeamsWebhookUrlMissing();
+        }
         $this->webhookUrl = $webhookUrl;
 
         return $this;

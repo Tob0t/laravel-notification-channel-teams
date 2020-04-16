@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\MicrosoftTeams\Test;
 
+use NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification;
 use NotificationChannels\MicrosoftTeams\MicrosoftTeamsMessage;
 use PHPUnit\Framework\TestCase;
 
@@ -103,6 +104,16 @@ class MicrosoftTeamsMessageTest extends TestCase
         $message = new MicrosoftTeamsMessage();
         $message->to('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567');
         $this->assertEquals('https://outlook.office.com/webhook/abc-01234/IncomingWebhook/def-567', $message->getWebhookUrl());
+    }
+
+    /** @test */
+    public function it_throws_an_exception_if_the_recipients_webhook_url_is_an_empty_string(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+
+        $this->expectException(CouldNotSendNotification::class);
+
+        $message->to('');
     }
 
     /** @test */
