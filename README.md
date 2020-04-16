@@ -39,7 +39,7 @@ return MicrosoftTeamsMessage::create()
 You can install the package via composer:
 
 ``` bash
-composer require tob0t/laravel-notification-channel-teams
+composer require laravel-notification-channels/teams
 ```
 
 ### Setting up the Connector

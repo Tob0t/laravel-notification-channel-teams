@@ -1,7 +1,7 @@
 {
-    "name": "tob0t/laravel-notification-channel-teams",
+    "name": "laravel-notification-channels/teams",
     "description": "A Laravel Notification Channel for Microsoft Teams",
-    "homepage": "https://github.com/Tob0t/laravel-notification-channel-teams",
+    "homepage": "https://github.com/laravel-notification-channels/teams",
     "license": "MIT",
     "authors": [
         {
