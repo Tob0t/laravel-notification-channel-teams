@@ -3,7 +3,6 @@
 namespace NotificationChannels\MicrosoftTeams;
 
 use Illuminate\Notifications\Notification;
-use NotificationChannels\MicrosoftTeams\Exceptions\CouldNotSendNotification;
 
 class MicrosoftTeamsChannel
 {
