@@ -31,9 +31,9 @@ class MicrosoftTeams
      * @param string $url
      * @param array $data
      *
-     *  @throws CouldNotSendNotification
+     * @throws CouldNotSendNotification
      *
-     *  @return ResponseInterface|null
+     * @return ResponseInterface|null
      */
     public function send(string $url, array $data): ?ResponseInterface
     {
