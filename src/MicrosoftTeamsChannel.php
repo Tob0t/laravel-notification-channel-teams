@@ -27,7 +27,7 @@ class MicrosoftTeamsChannel
      * @param mixed $notifiable
      * @param Notification $notification
      *
-     * @return ResponseInterface|null
+     * @return \Psr\Http\Message\ResponseInterface|null
      */
     public function send($notifiable, Notification $notification)
     {
