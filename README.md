@@ -117,8 +117,9 @@ public function routeNotificationForMicrosoftTeams(Notification $notification)
 - `summary(string $summary)`: Summary of the message.
 - `type(string $type)`: Type which is used as theme color (any valid hex code or one of: primary|secondary|accent|error|info|success|warning).
 - `content(string $content)`: Content of the message (Markdown supported).
-- `button(string $text, string $url = '', $type = 'OpenUri', array $params = [])`: Text and url of a button. For more Infos about different types check out [this link](https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference#actions).
-- `options(array $options, $sectionId = null)`: Add additional options to pass to message payload object.
+- `button(string $text, string $url = '', array $params = [])`: Text and url of a button. Wrapper for an potential action.
+- `action(string $text, $type = 'OpenUri', array $params = [])`: Text and type for a potential action. Further params can be added depending on the action. For more infos about different types check out [this link](https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference#actions).
+- `options(array $options, $sectionId = null)`: Add additional options to pass to the message payload object.
 
 #### Sections
 It is possible to define one or many sections inside a message card. The following methods can be used within a section
@@ -128,10 +129,11 @@ It is possible to define one or many sections inside a message card. The followi
 - `image(string $imageUri, string $title = '', $sectionId = 'standard_section')`: Add an image to a section.
 - `heroImage(string $imageUri, string $title = '', $sectionId = 'standard_section')`: Add a hero image to a section.
 
-Additionally the title, content and button can be also added to a section through the optional `params` value:
+Additionally the title, content, button and action can be also added to a section through the optional `params` value:
 - `title(string $title, array $params = ['section' => 'my-section'])`: Title of the message and add it to `my-section`.
 - `content(string $content, array $params = ['section' => 'my-section'])`: Content of the message and add it to `my-section` (Markdown supported).
-- `button(string $text, string $url = '', $type = 'OpenUri', array $params = ['section' => 'my-section'])`: Text and url of a button and add it to `my-section`.
+- `button(string $text, string $url = '', array $params = ['section' => 'my-section'])`: Text and url of a button and add it to `my-section`.
+- `action(string $text, $type = 'OpenUri', array $params = ['section' => 'my-section'])`: Text and type of an potential action and add it to `my-section`.
 
 ## Changelog
 
