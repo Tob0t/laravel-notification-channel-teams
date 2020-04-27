@@ -169,7 +169,7 @@ class MicrosoftTeamsMessage
                     'os'=> 'default',
                     'uri' => $url,
                 ],
-            ]
+            ],
         ];
 
         // fill additional params (if any)

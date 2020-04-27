@@ -130,10 +130,10 @@ class MicrosoftTeamsMessageTest extends TestCase
         $message = new MicrosoftTeamsMessage();
         $message->action('Laravel', 'HttpPOST', ['body' => 'test body']);
         $expectedButton = (object) [
-             '@type' => 'HttpPOST',
-             'name' => 'Laravel',
-             'body' => 'test body',
-         ];
+            '@type' => 'HttpPOST',
+            'name' => 'Laravel',
+            'body' => 'test body',
+        ];
         $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
     }
 
@@ -187,14 +187,14 @@ class MicrosoftTeamsMessageTest extends TestCase
                 'os'=> 'iOS',
                 'uri' => 'https://ios.laravel.com',
             ],
-            ]
+        ],
         ];
         $message->button('Laravel', 'https://laravel.com', $customTargets);
         $expectedButton = (object) [
-             '@type' => 'OpenUri',
-             'name' => 'Laravel',
-             'targets' => $customTargets['targets']
-         ];
+            '@type' => 'OpenUri',
+            'name' => 'Laravel',
+            'targets' => $customTargets['targets'],
+        ];
         $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
     }
 
