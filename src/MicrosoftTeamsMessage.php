@@ -108,53 +108,76 @@ class MicrosoftTeamsMessage
     }
 
     /**
-     * Add a button.
+     * Add an action.
      *
-     * @param string $text - label of the button
-     * @param string $url - url to forward to
+     * @param string $name - name of the action
      * @param string $type - defaults to 'OpenUri' should be one of the following types:
      *  - OpenUri: Opens a URI in a separate browser or app; optionally targets different URIs based on operating systems
      *  - HttpPOST: Sends a POST request to a URL
      *  - ActionCard: Presents one or more input types and associated actions
      *  - InvokeAddInCommand: Opens an Outlook add-in task pane.
-     * * @param array $params - optional params (neexed for more complex types other than 'OpenUri' and for section)
+     * * @param array $params - optional params (needed for complex types and for section)
      * For more information check out: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
      *
      * @return MicrosoftTeamsMessage $this
      */
-    public function button(string $text, string $url = '', $type = 'OpenUri', array $params = []): self
+    public function action(string $name, $type = 'OpenUri', array $params = []): self
     {
 
         // fill required values for all types
-        $newButton = [
+        $newAction = [
             '@type' => $type,
-            'name' => $text,
+            'name' => $name,
         ];
-
-        // fill targets array for type 'OpenUri'
-        if ($type === 'OpenUri') {
-            $newButton['targets'] = [
-                (object) [
-                    'os'=> 'default',
-                    'uri' => $url,
-                ],
-            ];
-        }
 
         // fill additional params (needed for other types than 'OpenUri')
         if (! empty($params)) {
-            $newButton = array_merge($newButton, $params);
+            $newAction = array_merge($newAction, $params);
         }
 
         // if section is defined add it to specified section
         if (isset($params['section'])) {
-            // remove unsued property from newButton array
-            unset($newButton['section']);
+            // remove unsued property from newAction array
+            unset($newAction['section']);
             $sectionId = $params['section'];
-            $this->payload['sections'][$sectionId]['potentialAction'][] = (object) $newButton;
+            $this->payload['sections'][$sectionId]['potentialAction'][] = (object) $newAction;
         } else {
-            $this->payload['potentialAction'][] = (object) $newButton;
+            $this->payload['potentialAction'][] = (object) $newAction;
         }
+
+        return $this;
+    }
+
+    /**
+     * Add a button.
+     * Wrapper for a potential action by just providing $text and $url params.
+     *
+     * @param string $text - label of the button
+     * @param string $url - url to forward to
+     * @param array $params - optional params (needed for more complex types  and for section)
+     * For more information check out: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference#openuri-action
+     *
+     * @return MicrosoftTeamsMessage $this
+     */
+    public function button(string $text, string $url = '', array $params = []): self
+    {
+
+        // fill targets that is needed for a button
+        $newButton = [
+            'targets' => [
+                (object) [
+                    'os'=> 'default',
+                    'uri' => $url,
+                ],
+            ]
+        ];
+
+        // fill additional params (if any)
+        if (! empty($params)) {
+            $newButton = array_merge($newButton, $params);
+        }
+
+        $this->action($text, 'OpenUri', $newButton);
 
         return $this;
     }

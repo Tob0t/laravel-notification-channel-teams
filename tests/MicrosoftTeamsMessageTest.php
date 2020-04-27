@@ -125,6 +125,19 @@ class MicrosoftTeamsMessageTest extends TestCase
     }
 
     /** @test */
+    public function an_action_with_options_can_be_added_to_the_messsage(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+        $message->action('Laravel', 'HttpPOST', ['body' => 'test body']);
+        $expectedButton = (object) [
+             '@type' => 'HttpPOST',
+             'name' => 'Laravel',
+             'body' => 'test body',
+         ];
+        $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
+    }
+
+    /** @test */
     public function a_standard_button_can_be_added_to_the_messsage(): void
     {
         $message = new MicrosoftTeamsMessage();
@@ -146,12 +159,42 @@ class MicrosoftTeamsMessageTest extends TestCase
     public function a_button_with_additional_options_can_be_added_to_the_messsage(): void
     {
         $message = new MicrosoftTeamsMessage();
-        $message->button('Laravel', 'https://laravel.com', 'HttpPOST', ['body' => 'test body']);
+        $message->button('Laravel', 'https://laravel.com', ['body' => 'test body']);
         $expectedButton = (object) [
-            '@type' => 'HttpPOST',
+            '@type' => 'OpenUri',
             'name' => 'Laravel',
+            'targets' => [
+                (object) [
+                    'os'=> 'default',
+                    'uri' => 'https://laravel.com',
+                ],
+            ],
             'body' => 'test body',
         ];
+        $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
+    }
+
+    /** @test */
+    public function a_button_with_custom_targets_are_overwriting_the_standard_targets_of_the_messsage(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+        $customTargets = ['targets' => [
+            (object) [
+                'os'=> 'android',
+                'uri' => 'https://android.laravel.com',
+            ],
+            (object) [
+                'os'=> 'iOS',
+                'uri' => 'https://ios.laravel.com',
+            ],
+            ]
+        ];
+        $message->button('Laravel', 'https://laravel.com', $customTargets);
+        $expectedButton = (object) [
+             '@type' => 'OpenUri',
+             'name' => 'Laravel',
+             'targets' => $customTargets['targets']
+         ];
         $this->assertEquals($expectedButton, $message->getPayloadValue('potentialAction')[0]);
     }
 
@@ -204,10 +247,23 @@ class MicrosoftTeamsMessageTest extends TestCase
     }
 
     /** @test */
+    public function an_action_can_be_added_to_a_section(): void
+    {
+        $message = new MicrosoftTeamsMessage();
+        $message->action('Laravel', 'HttpPOST', ['section' => 1]);
+        $expectedButton = (object) [
+            '@type' => 'HttpPOST',
+            'name' => 'Laravel',
+        ];
+        $this->assertEquals($expectedButton, $message->getPayloadValue('sections')[1]['potentialAction'][0]);
+        $this->assertEmpty($message->getPayloadValue('potentialAction'));
+    }
+
+    /** @test */
     public function a_standard_button_can_be_added_to_a_section(): void
     {
         $message = new MicrosoftTeamsMessage();
-        $message->button('Laravel', 'https://laravel.com', 'OpenUri', ['section' => 1]);
+        $message->button('Laravel', 'https://laravel.com', ['section' => 1]);
         $expectedButton = (object) [
             '@type' => 'OpenUri',
             'name' => 'Laravel',
@@ -415,7 +471,7 @@ class MicrosoftTeamsMessageTest extends TestCase
             ->heroImage('https://messagecardplayground.azurewebsites.net/assets/TINYPulseQuestionIcon.png', 'TooltipHero', 'image_section')
             ->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo.png', 'Tooltip', 'image_section')
             ->image('https://messagecardplayground.azurewebsites.net/assets/FlowLogo2.png', 'Tooltip2', 'image_section')
-            ->button('Laravel', 'https://laravel.com', 'OpenUri', ['section' => 'image_section']);
+            ->button('Laravel', 'https://laravel.com', ['section' => 'image_section']);
         $expected = [
             '@type' => 'MessageCard',
             '@context' => 'https://schema.org/extensions',
