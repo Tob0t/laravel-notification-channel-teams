@@ -1,4 +1,4 @@
-# Microsoft Teams Notifications Channel for Laravel
+# Microsoft Teams Notifications Channel for Laravel (Moved) 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/teams.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/teams)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -8,6 +8,9 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/laravel-notification-channels/teams.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/teams)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/teams/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/teams/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/teams.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/teams)
+
+**I am happy to announce that this repo was officially accepted by Laravel Notification Channels and now can be found under https://github.com/laravel-notification-channels/microsoft-teams. 
+Please do not use this repo anymore, as I will archive this repo soon.**
 
 This package makes it easy to send notifications using [Microsoft Teams](https://products.office.com/en-US/microsoft-teams/group-chat-software) with Laravel 5.5+, 6.x and 7.x
 
